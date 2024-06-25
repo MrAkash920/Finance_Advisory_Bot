@@ -1,0 +1,42 @@
+import os
+
+# Define the directory structure
+directory_structure = {
+    'investment-advisory-chatbot': {
+        'backend': {
+            'app.py': '',
+            'requirements.txt': '',
+            'Dockerfile': '',
+        },
+        'frontend': {
+            'public': {
+                'index.html': '',
+            },
+            'src': {
+                'App.js': '',
+                'App.css': '',
+            },
+            'package.json': '',
+            'Dockerfile': '',
+        },
+    }
+}
+
+def create_directory_structure(root_path, structure):
+    for key, value in structure.items():
+        path = os.path.join(root_path, key)
+        if isinstance(value, dict):
+            os.makedirs(path, exist_ok=True)
+            create_directory_structure(path, value)
+        else:
+            # If value is a string (representing file content), create the file
+            with open(path, 'w') as f:
+                f.write(value)
+
+# Root path where the structure will be created
+root_path = './investment-advisory-chatbot'
+
+# Create the directory structure
+create_directory_structure(root_path, directory_structure)
+
+print(f'Directory structure created at: {root_path}')
